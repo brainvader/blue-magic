@@ -1,34 +1,42 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Blue Magic
 
-## Getting Started
+## どんなアプリにするか?
 
-First, run the development server:
+昔から教育アプリというのは決まっているが, 自習できるクイズ系のアプリを作ってみる. 
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+当面の目標としては取り合ず自分の勉強したことをクイズ形式にまとめて, 検索可能にしてこんなことができるぞという感じでブログっぽく公表する. 
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+システムが出来上がってきたら徐々にカバー範囲を広げて誰でも使えるようにしていきたい.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 技術スタック
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+フロントはNext.jsで作る. 以前に触ったことがあるからまぁ少しは使い方多少わかるだろうと思っている. Cloudflare Pages上にホストし, データベースは次の節で説明するがNeo4jというグラフ・データベースを使う. クエリにはGraphQLを採用したい.
 
-## Learn More
+実際にクイズを説いて成績の管理はGASを使ってスプレッドシートに記録する形で始めたい.
 
-To learn more about Next.js, take a look at the following resources:
+* [Next.js](https://nextjs.org/)
+* [Cloudflare Pages](https://pages.cloudflare.com/)
+* [Neo4j](https://neo4j.com/)
+* [GraphQL Yoga](https://the-guild.dev/graphql/yoga-server)
+* [Google Script App](https://www.google.com/script/start/)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## デカルトとシステム
 
-## Deploy on Vercel
+> 困難は分割せよ
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+といったのはルネ・デカルトである. 
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+成績を自分で管理するという考えで作っていきたい. 能力を図る方法としてどういう方法がいいのかは分からないが, 現在の成績管理はバルクで処理するようになっている. 英語の勉強ならなにがしかの検定を受けるということになる. 受験勉強しかりで, これはどうしてもお金もかかるし評価を受けれれるスパンも長くなる. 何より成績という過程が手元に残らない. 生涯学習として一体自分がどういう状態かだんだんわからなくなる. こうした学習過程をデータとして保持するというのが中心的な課題となる.
+
+従来の試験や検定の存在意義は変わらないが(足きりとしての役割がある), テスト合格まであとどれぐらいとかが可視化された方が多くの人にとって勉強継続の動機付けになるだろう. あるいは会社などで新人教育などのデータも細かく取れた方が経年で教育のロスが少なくなるかもしれない.
+
+どういう方法で能力を測るにしても, 日々勉強してれば人間は少しずつ成長する. 学ぶ側としても小さな目標を少しずつクリアしていく方がいいのではないかと思った. 目の前の勉強がこういうもののために必要だということも説明可能になる. ライフサイクルで学習期間がとびとびになることもあるだろう. またまとまった学習時間が取れないというのも社会人ならありがちな課題だ. 学習を失敗させる様々な要因がデータの欠損にあるように思われてならない.
+
+これは細かくデータをとることで軽減できると思う. データを細かく取れれば, 機械的に次に勉強することの提案等もできるようになるかなと思っている. しかしこれをソフトウェア的にサポートするツールは筆者の観測範囲では存在しない(あったらごめんなさい. 参考にします).
+
+データベースをNeo4jにしたのは問題間に関係性があるだろうと考えているからです. 学習にはA -> B -> Cのような学ぶ順番がある. これはよくいろんな勉強方法で言われていることで分かるところまで戻って始めた方が教育効果が高いという話もある. これはグラフで表せるだろうし, グラフならNeo4jだろうと思った.
+
+計測の単位というか方法論としてクイズがいいかは分からないが, 完結で一般に広く使われている手法だと思う. 後は教材の質だが, 便利なツールとなれば勝手に集まってくるのではないだろうか(現在考えるのはさすがに杞憂だろう).
+
+もっと先の話を書けばこうしたデータからAIが勝手に質問して先生として教育する未来を夢見たりしています.
