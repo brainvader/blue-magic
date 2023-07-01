@@ -1,0 +1,15 @@
+type Post {
+    id: ID! @id
+    author: User! @relationship(type: "HAS_POST", direction: IN, properties: "PostedAt")
+    dependencies: [Post!]! @relationship(type: "DEPENDS_ON", direction: OUT)
+}
+
+type User {
+    id: ID! @id
+    name: String!
+    posts: [Post!]! @relationship(type: "HAS_POST", direction: OUT, properties: "PostedAt")
+}
+
+interface PostedAt {
+    date: DateTime! @timestamp
+}
